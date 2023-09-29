@@ -17,6 +17,12 @@ export default function Dashboard() {
       });
   };
 
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // You can also use 'auto' for an instant scroll
+    });
+  }
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -58,7 +64,7 @@ export default function Dashboard() {
     0
   );
   return (
-    <div className="bg-[#14182f] w-72 h-screen text-sm text-white py-5 px-2">
+    <div className="bg-[#14182f] lg:w-72 lg:h-screen text-sm text-white py-5 px-2">
       <div className="flex justify-between mt-3">
         <p className="font-thin font-poppin  text-zinc-400">Recent Expenses</p>
         <Link to="#" className=" text-blue-500 underline">
@@ -93,7 +99,7 @@ export default function Dashboard() {
         <p>{expenseDataToRender ? totalAmount : " "}</p>
       </section>
       <Link to="/home/expense">
-        <button className="mt-9 bg-blue-700 hover:bg-blue-600 w-full rounded-lg py-3">
+        <button onClick={scrollToTop} className="mt-9 bg-blue-700 hover:bg-blue-600 w-full rounded-lg py-3">
           + Add New Expense
         </button>
       </Link>

@@ -7,8 +7,8 @@ export default function Form() {
     { name: "Create New Budget", path: "create" },
   ];
   return (
-    <div className="w-3/4 bg-[#E6E6E6] h-screen">
-      <div className="mx-auto w-3/4 bg-white shadow-md px-6 py-4 mt-20 rounded-xl space-y-5">
+    <div className="lg:w-3/4 w-full bg-[#E6E6E6] h-screen">
+      <div className="mx-auto lg:w-3/4 w-full bg-white shadow-md px-6 py-4 mt-20 rounded-xl space-y-5">
         <nav>
           <ul className="flex gap-8">
             {navs.map((nav) => (

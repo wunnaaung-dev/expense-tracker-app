@@ -67,7 +67,7 @@ export default function AddExpense() {
   }
   console.log(formData)
   return (
-    <form className="" action="" onSubmit={handleAddExpense}>
+    <form  action="" onSubmit={handleAddExpense}>
       <div className="mb-2">
         <label htmlFor="expense-title">Expense Title</label>
         <br />

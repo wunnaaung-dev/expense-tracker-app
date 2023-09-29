@@ -52,8 +52,8 @@ export default function Overview() {
     return null
   }
   return (
-    <div className="w-3/4 px-6 bg-[#0e1020] h-screen text-white">
-      <div className="flex justify-between w-full font-poppin mt-5">
+    <div className="lg:w-full px-6 pb-2 bg-[#0e1020] lg:h-screen text-white">
+      <div className="flex justify-between w-full font-poppin pt-3">
         <h1 className="font-medium">Good {greeting}, {currentUserName}</h1>
         <p className='font-medium text-zinc-400'>{formattedDate}</p>
       </div>

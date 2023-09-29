@@ -30,7 +30,7 @@ export default function Categories() {
   }
   return (
     <div className="pt-4 px-5 bg-[#0e1020] h-screen w-full">
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
         {categories?.map((category) => (
           <Suspense fallback={<Card_Loading />} key={category.id}>
             <Card_Category title={category.category} limit={category.limit} />
