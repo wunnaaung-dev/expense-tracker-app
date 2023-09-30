@@ -23,26 +23,24 @@ export default function Card_Category({ title, limit }) {
 
   if (data === null) {
     // Data is still loading, you can return a loading indicator or null
-    return(
-      <Card_Loading />
-    );
+    return <Card_Loading />;
   }
   let bgColor = "h-2 rounded-full ";
   let percentage = (data / limit) * 100;
   console.log("Percentage is ", Math.round(percentage));
-  const progressBar = `${Math.round(percentage)}%`
+  let progressBar = `${Math.round(percentage)}%`;
 
   if (percentage < 50) {
     bgColor += "bg-green-500";
   } else {
-    bgColor += "bg-red-500"
+    bgColor += "bg-red-500";
   }
   return (
     <div className="bg-slate-200 w-70 h-max rounded-md px-4 py-6 shadow-md">
       <div className="flex justify-between">
         <h1>{title}</h1>
         <div className="flex gap-1">
-          <p className='font-medium text-slate-500'>{data}</p>
+          <p className="font-medium text-slate-500">{data}</p>
           <p>/</p>
           <p className="font-semibold text-[#272829]">{limit}</p>
         </div>
@@ -50,7 +48,7 @@ export default function Card_Category({ title, limit }) {
       <div className="w-full h-2 bg-slate-300 rounded-full mt-3">
         <div
           className={bgColor}
-          style={{width: progressBar}}
+          style={{ width: percentage > 100 ? "100%" : progressBar }}
         ></div>
       </div>
     </div>

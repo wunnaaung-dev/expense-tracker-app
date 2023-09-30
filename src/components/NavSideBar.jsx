@@ -17,7 +17,7 @@ export default function NavSideBar() {
   ];
   let aside = "lg:w-48 lg:h-screen bg-[#14182f] w-full"
   let navigation = "hidden lg:block"
-  let mainContents = "lg:flex w-full"
+  let mainContents = "lg:flex w-full "
   if(toggle) {
     aside = "bg-[#14182f] w-full"
     navigation = "h-screen"

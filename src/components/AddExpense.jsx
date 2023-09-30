@@ -4,14 +4,40 @@ import { Link, useNavigate } from "react-router-dom";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
 import { getData } from "../config/helper";
+
+function Inputfield({
+  type = "text",
+  label,
+  id,
+  name,
+  value,
+  onChange,
+  placeholder = "",
+}) {
+  return (
+    <div className="mb-2">
+      <label htmlFor={id}>{label}</label>
+      <br />
+      <input
+        type={type}
+        id={id}
+        name={name}
+        value={value}
+        onChange={onChange}
+        className="bg-[#F5F5F5] mt-2 border outline-none focus:border-[#2D2727] focus:border-2 rounded-md w-3/4 px-2 py-1.5"
+        placeholder={placeholder}
+      />
+    </div>
+  );
+}
 export default function AddExpense() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const user = auth.currentUser;
-  const [fetchedCategory, setFetchedCategory] = useState([])
+  const [fetchedCategory, setFetchedCategory] = useState([]);
   useEffect(() => {
-    const fetchData = async() => {
+    const fetchData = async () => {
       try {
-        const data = await getData("category", user.uid)
+        const data = await getData("category", user.uid);
         setFetchedCategory(data);
         if (data.length > 0) {
           setFormData({
@@ -19,26 +45,26 @@ export default function AddExpense() {
             category: data[0].category,
           });
         }
-        console.log("Category Data", data)
+        console.log("Category Data", data);
       } catch (error) {
-        console.log("Error in fetching", error)
+        console.log("Error in fetching", error);
       }
-    }
-    fetchData()
-  }, [user.uid])
-  console.log("Fetched Data", fetchedCategory)
+    };
+    fetchData();
+  }, [user.uid]);
+  console.log("Fetched Data", fetchedCategory);
   const [formData, setFormData] = useState({
     expenseTitle: "",
     amount: "",
     category: fetchedCategory.length > 0 ? fetchedCategory[0].category : "",
     date: "",
   });
-  const [isPending, setPending] = useState(false)
+  const [isPending, setPending] = useState(false);
   const isAddButtonDisabled = !(
     formData.expenseTitle &&
     formData.amount &&
     formData.date
-  )
+  );
   function handleInputChange(e) {
     const { name, value } = e.target;
     setFormData({
@@ -46,10 +72,10 @@ export default function AddExpense() {
       [name]: value,
     });
   }
-  console.log(formData)
+  console.log(formData);
   async function handleAddExpense(e) {
     e.preventDefault();
-    setPending(true)
+    setPending(true);
     try {
       const expenseCollectionRef = collection(db, "expense");
 
@@ -60,40 +86,30 @@ export default function AddExpense() {
       };
       await addDoc(expenseCollectionRef, newExpense);
       console.log("Added Successfully");
-      navigate("/home")
+      navigate("/home");
     } catch (error) {
       console.error("Error in adding expense", error);
     }
   }
-  console.log(formData)
+  console.log(formData);
   return (
-    <form  action="" onSubmit={handleAddExpense}>
-      <div className="mb-2">
-        <label htmlFor="expense-title">Expense Title</label>
-        <br />
-        <input
-          type="text"
-          id="expense-title"
-          name="expenseTitle"
-          value={formData.expenseTitle}
-          onChange={handleInputChange}
-          className="bg-[#F5F5F5] mt-2 border outline-none focus:border-[#2D2727] focus:border-2 rounded-md w-3/4 px-2 py-1.5"
-          placeholder="Where did you spend your money"
-        />
-      </div>
-      <div className="mb-2">
-        <label htmlFor="amount">Amount</label>
-        <br />
-        <input
-          type="text"
-          id="amount"
-          name="amount"
-          value={formData.amount}
-          onChange={handleInputChange}
-          className="bg-[#F5F5F5] mt-2 border outline-none focus:border-[#2D2727] focus:border-2 rounded-md w-3/4 px-2 py-1.5"
-          placeholder="How much did you spend"
-        />
-      </div>
+    <form action="" onSubmit={handleAddExpense}>
+      <Inputfield
+        label="Expense Title"
+        id="expense-title"
+        name="expenseTitle"
+        value={formData.expenseTitle}
+        onChange={handleInputChange}
+        placeholder="Where did you spend your money"
+      />
+      <Inputfield
+        label="Amount"
+        id="amount"
+        name="amount"
+        value={formData.amount}
+        onChange={handleInputChange}
+        placeholder="How much did you spend"
+      />
       <div className="mb-2">
         <label htmlFor="categories">Category</label>
         <br />
@@ -108,24 +124,27 @@ export default function AddExpense() {
           <option value="gadgets">Housing</option>
           <option value="clothes">Clothes</option>
           <option value="entertainment">Entertainment</option> */}
-          {fetchedCategory.map(opt => 
-            <option key={opt.id} value={opt.category}>{opt.category}</option>  
-          )}
+          {fetchedCategory.map((opt) => (
+            <option key={opt.id} value={opt.category}>
+              {opt.category}
+            </option>
+          ))}
         </select>
       </div>
-      <div className="mb-2">
-        <label htmlFor="date">Choose Date</label> <br />
-        <input
-          type="date"
-          id="date"
-          name="date"
-          value={formData.date}
-          onChange={handleInputChange}
-          className="bg-[#F5F5F5] mt-2 border outline-none focus:border-[#2D2727] focus:border-2 rounded-md w-3/4 px-2 py-1.5"
-        />
-      </div>
+      <Inputfield
+        label="Choose Date"
+        type="date"
+        id="date"
+        name="date"
+        value={formData.date}
+        onChange={handleInputChange}
+      />
       <div className="mt-6 space-x-3">
-        <Action disabled={isAddButtonDisabled || isPending} type="submit" color="bg-blue-600 hover:bg-blue-700 text-white">
+        <Action
+          disabled={isAddButtonDisabled || isPending}
+          type="submit"
+          color="bg-blue-600 hover:bg-blue-700 text-white"
+        >
           Add
         </Action>
         <Link to="/home">
